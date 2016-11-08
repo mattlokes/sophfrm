@@ -1,0 +1,11 @@
+# Unique identifier used for diffing between Current and New config, 
+# this just has to be diffrent than the old on
+<ID>00000004</ID>
+
+#This is the Photo Change Time, in Minutes
+<PHOTOTIME>00000010</PHOTOTIME>
+
+#This is the path of the Tar containing the photos
+# Photos inside must me labelled photo_*.png
+# when * = consecutive numbering starting from 0
+<PHOTOTAR>http://labs.justabitmatt.com/frame/cfg/photos_00000004.tar.gz</PHOTOTAR>

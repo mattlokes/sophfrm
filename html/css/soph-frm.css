@@ -1,0 +1,127 @@
+.header {
+    z-index: 1;
+    height:70px;
+    background:#464059;
+    position:fixed;
+    width:100%;
+    margin:0px auto;
+    box-shadow: 0px 3px 3px grey;
+}
+
+.header-icon-bar {
+    margin-top: 12px;
+}
+
+.header-icon {
+    color: #ffffff;
+    /*text-shadow: 3px 3px 3px #2e2a3a;*/
+    margin-left: 50px;
+}
+
+.content {
+    z-index: -1;
+    padding-top: 70px; /*Must be Header Height*/
+    /*height: 2000px;*/ /*TEST FOR SCROLLING */
+}
+
+@media screen and (min-width: 550px) {
+.tile-row{
+    padding-top: 20px;
+}
+
+} /*@media screen and (min-width:550px)*/
+
+@media screen and (max-width: 550px) {
+.tile-row:first-child{
+    padding-top: 10px;
+}
+
+} /*@media screen and (max-width:550px)*/
+
+.tile-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px grey;
+}
+
+/* -------------------------- */
+/* TILE OVERLAY               */
+/* -------------------------- */
+
+/*  Overlay (background) */
+.tile-overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */    
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    /*transition: 0.4s;*/ /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+}
+
+/* Position the content inside the overlay */
+.tile-overlay-content {
+    position: relative;
+    top: 10%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+}
+
+.tile-overlay-img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.tile-overlay-content button {
+    margin-top: 5px;
+    color: #AAA;
+    width: 120px;
+}
+
+.tile-overlay-btn-icon {
+    padding-right: 5px;
+}
+
+.tile-hidden {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba( 0, 0, 0, .6 );
+}
+
+.tile-hidden .fa {
+ font: normal normal normal 200px FontAwesome; /* ... */
+ color: rgba( 255, 255, 255, 0.5);
+}
+
+/* -------------------------- */
+/* UPLOAD OVERLAY             */
+/* -------------------------- */
+
+
+
+
+/* Hacky Hack Hacks..... */
+@media screen and (min-width: 550px) {
+.mob-port-hack{
+    display: block;
+}
+
+} /*@media screen and (min-width:550px)*/
+
+@media screen and (max-width: 550px) {
+.mob-port-hack{
+    display: none;
+}
+}

@@ -1,4 +1,1 @@
-[ {"photoPath":"gallery/algodones_dunes_california-wallpaper-800x600.jpg", "show":true}, 
-  {"photoPath":"gallery/red_foliage_fall-wallpaper-800x600.jpg", "show":true}, 
-  {"photoPath":"gallery/atlantis_nebula_7-wallpaper-800x600.jpg", "show":true}, 
-  {"photoPath":"gallery/wrangell_mountains_alaska-wallpaper-800x600.jpg", "enabled":true} ]
+[{"photoPath":"gallery/algodones_dunes_california-wallpaper-800x600.jpg","show":false},{"photoPath":"gallery/red_foliage_fall-wallpaper-800x600.jpg","show":true},{"photoPath":"gallery/atlantis_nebula_7-wallpaper-800x600.jpg","show":true},{"photoPath":"gallery/wrangell_mountains_alaska-wallpaper-800x600.jpg","show":true}]

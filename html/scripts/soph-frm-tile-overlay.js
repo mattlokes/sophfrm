@@ -4,6 +4,14 @@
     var global_img_obj = null;
 
     function save_cfg_changes () {
+      $.ajax({
+               type: "POST",
+               dataType: "json",
+               url: "gallery_cfg_save.php",
+               data: JSON.stringify(global_galleryConfig),
+               contentType: "application/json"
+             });    
+
     }
 
     function resize_tile_overlay_preview( img_obj ) {
@@ -57,7 +65,6 @@
     
    function close_tile_overlay ( ) {
       $('.tile-overlay').fadeOut(400);
-      save_cfg_changes();
     }
    
     // ---------------------------------------
@@ -75,4 +82,5 @@
     
     $('#btn-tile-hide').click(function(){
       global_galleryConfig[global_cfgIdx]['show'] = !global_cfgShow;
+      save_cfg_changes();
     });

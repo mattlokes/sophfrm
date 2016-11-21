@@ -129,4 +129,9 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
 </body>
 </html>
 
-<?php endif; ?>
+<?php 
+else:
+    echo 'Invalid Password!';
+    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('HTTP/1.0 401 Unauthorized');
+endif; ?>

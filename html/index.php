@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 
 $galleryDir         = getcwd() . '/gallery';
 $galleryConfigPath  = $galleryDir . '/gallery.json';
-$config             = json_decode(file_get_contents($galleryConfigPath), true);
 
 //print($config[0]['photoPath']);
 
@@ -69,20 +68,7 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   
   <!-- Gallery Generated -->
   <div class="content">
-    <div class="container">
-      <?php
-        for ($x = 0; $x < sizeof($config); $x++) {
-          if( ($x % 3) == 0) {
-            echo "<div class='row tile-row'>\n";
-          }
-         echo "<div class='four columns'>" . 
-              "  <img id='tile_" . $x . "' src='" . $config[$x]['photoPath'] . "' class='tile-img'>" . 
-              "</div>\n";
-          if( (($x+1) % 3) == 0) {
-            echo "</div>\n";
-          }
-        } 
-      ?>
+    <div id='tile_gallery' class="container">
     </div>
   </div>
   
@@ -118,8 +104,11 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="scripts/soph-frm-tile-gallery.js"></script>
   <script type="text/javascript"> 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
+    tiles = tileGallery( global_galleryConfig, "tile_gallery");
+    tiles.init();
   </script>
   <script src="scripts/soph-frm-tile-overlay.js"></script>
 

@@ -80,10 +80,10 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
       <div class='container'>
         <div class='row'>
           <div class='four columns mob-port-hack'>&nbsp</div>
-          <div class='four columns'>
-            <img src='' id='tile-overlay-preview' class='tile-overlay-img'>
-            <div id='tile-overlay-hidden' class="tile-hidden">
-              <i id='tile-overlay-hidden-icon' class="fa fa-eye-slash"></i>
+          <div class='four columns tile-container'>
+            <img src='' id='tile-overlay-img' class='tile-overlay-img'>
+            <div id='tile-overlay-hide-over' class="tile-hide-over">
+              <i id='tile-overlay-hide-over-icon' class="fa fa-eye-slash"></i>
             </div>
           </div>
           <div class='four columns'>&nbsp</div>

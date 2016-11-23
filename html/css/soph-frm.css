@@ -90,7 +90,12 @@
     padding-right: 5px;
 }
 
-.tile-hidden {
+.tile-container{
+    text-align: center; /* Centered text/links */
+    position: relative;
+}
+
+.tile-hide-over {
     position: absolute;
     top: 0;
     left: 0;
@@ -100,7 +105,7 @@
     background: rgba( 0, 0, 0, .6 );
 }
 
-.tile-hidden .fa {
+.tile-hide-over .fa {
  font: normal normal normal 200px FontAwesome; /* ... */
  color: rgba( 255, 255, 255, 0.5);
 }

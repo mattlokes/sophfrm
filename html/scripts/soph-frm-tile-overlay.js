@@ -79,7 +79,16 @@
       open_tile_overlay( this ); 
     });
     
+    $('.tile-hide-over-g').click(function(){
+      open_tile_overlay( $(this).siblings('img') );
+    });
+    
     $('#btn-tile-hide').click(function(){
+      if(global_cfgShow) { //If Img show, hide img on click, show overlay
+        $('#tile-'+global_cfgIdx+'-hide-over').fadeIn(400);  //Show Eye-slash overlay
+      } else { //Img was hidden, now show on click, show overlay
+        $('#tile-'+global_cfgIdx+'-hide-over').fadeOut(400);  //Hide Eye-slash overlay
+      }
       global_galleryConfig[global_cfgIdx]['show'] = !global_cfgShow;
       save_cfg_changes();
     });

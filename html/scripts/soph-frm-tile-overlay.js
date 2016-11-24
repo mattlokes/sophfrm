@@ -20,8 +20,8 @@
       
       // Scale tile-overlay IMG
       if (window.matchMedia('(min-width: 550px)').matches) { 
-        //img_h = img_h * 1.25;
-        //img_w = img_w * 1.25;
+        //obj_h = obj_h *i 1.25;
+        //obj_w = obj_w * 2;
       }
 
       $('#tile-overlay-img').css('width', obj_w+"px");

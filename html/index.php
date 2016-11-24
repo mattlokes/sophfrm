@@ -109,6 +109,10 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
     tiles = tileGallery( global_galleryConfig, "tile_gallery");
     tiles.init();
+    $(window).on('resize', function(){
+      tiles.resize();
+      resize_tile_overlay_preview(global_img_obj);
+    });
   </script>
   <script src="scripts/soph-frm-tile-overlay.js"></script>
 

@@ -30,24 +30,28 @@ function tileGallery( configObj, elementId ) {
     $('#' + this.elementId).append(htmlToIns);
    
 
-   setTimeout(function(){
-     var obj_h    = parseFloat( $( '#tile-0-img' ).css('height') );
-     var obj_w    = parseFloat( $( '#tile-0-img' ).css('width') );
+     setTimeout(function(){
+       this.resize();
+     },50); 
+  };
+  
+  this.resize = function () {
+    var obj_h    = parseFloat( $( '#tile-0-img' ).css('height') );
+    var obj_w    = parseFloat( $( '#tile-0-img' ).css('width') );
  
-     //Alter tile-#-hide-over-icon padding and size;
-     for( var i=0; i<this.tileNum; i++) {
-       overIconId = "tile-"+i+"-hide-over-icon";
-       overId     = "tile-"+i+"-hide-over";
-       //$('#tile-overlay-hide-over').css('width', obj_w+"px");
-       $('#' + overId).css('height', obj_h+"px");
-       $('#' + overIconId).css('font-size',   (obj_w * 0.66)+"px");
-       $('#' + overIconId).css('padding-top', (  (obj_h - (obj_w * 0.66) ) * 0.5 )+"px");
-       if ( !this.config[i]['show']) {
-         $('#' + overId ).css('display','block');
-       }
-     }
-    },50); 
-
+    //Alter tile-#-hide-over-icon padding and size;
+    for( var i=0; i<this.tileNum; i++) {
+      overIconId = "tile-"+i+"-hide-over-icon";
+      overId     = "tile-"+i+"-hide-over";
+      //$('#tile-overlay-hide-over').css('width', obj_w+"px");
+      $('#' + overId).css('height', obj_h+"px");
+      $('#' + overIconId).css('font-size',   (obj_w * 0.66)+"px");
+      $('#' + overIconId).css('padding-top', (  (obj_h - (obj_w * 0.66) ) * 0.5 )+"px");
+      if ( !this.config[i]['show']) {
+        $('#' + overId ).css('display','block');
+      }
+    }
+  
   };
   return this;
 }

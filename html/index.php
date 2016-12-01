@@ -41,10 +41,11 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/soph-frm.css">
+  <link rel="stylesheet" href="css/soph-frm-uplo-overlay.css">
   <link rel="stylesheet" href="css/soph-frm-tile-overlay.css">
   <link rel="stylesheet" href="css/soph-frm-tile-gallery.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">      
-
+  <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.min.css">
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– 
   <link rel="icon" type="image/png" href="images/favicon.png"> -->
@@ -62,7 +63,7 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
         <div class="header-icon-bar">
           <i class="fa fa-check fa-3x u-pull-right header-icon"></i>
           <i class="fa fa-clock-o fa-3x u-pull-right header-icon"></i>
-          <i class="fa fa-upload fa-3x u-pull-right header-icon"></i>
+          <i id="header-uplo-icon" class="fa fa-upload fa-3x u-pull-right header-icon"></i>
         </div>
     </div>
   </div>
@@ -105,14 +106,42 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
 
   </div>
 
-  <!-- Add Overlay -->
+  <!-- Uplo Overlay -->
+  <div class="uplo-overlay">
+
+    <!-- Overlay content -->
+    <div class="uplo-overlay-content">
+      <input id="file" type="file" style="display: none" />
+      <div class='container'>
+        <div class='row'>
+          <div class='four columns mob-port-hack'>&nbsp</div>
+          <div class='four columns uplo-container'>
+            <canvas id="uplo_canvas" class="uplo-canvas"></canvas>
+            <div id='uplo-overlay-hide-over' class="uplo-hide-over">
+              <i id='uplo-overlay-hide-over-icon' class="fa fa-upload"></i>
+            </div>
+          </div>
+          <div class='four columns'>&nbsp</div>
+        </div>
+      </div>
+      <div>
+        <button type="button" id='btn-uplo-next'></button>
+      </div>
+      <div>
+        <button type="button" id='btn-uplo-back'></button>
+      </div>
+    </div>
+
+  </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
   <script type="text/javascript"> 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
   </script>
   <script src="scripts/soph-frm-tile-gallery.js"></script>
   <script src="scripts/soph-frm-tile-overlay.js"></script>
+  <script src="scripts/soph-frm-uplo-overlay.js"></script>
   <script src="scripts/soph-frm.js"></script>
 
 </div>

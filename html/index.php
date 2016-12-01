@@ -41,6 +41,8 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/soph-frm.css">
+  <link rel="stylesheet" href="css/soph-frm-tile-overlay.css">
+  <link rel="stylesheet" href="css/soph-frm-tile-gallery.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">      
 
   <!-- Favicon
@@ -102,18 +104,15 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
     </div>
 
   </div>
+
+  <!-- Add Overlay -->
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="scripts/soph-frm-tile-gallery.js"></script>
   <script type="text/javascript"> 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
-    tiles = tileGallery( global_galleryConfig, "tile_gallery");
-    tiles.init();
-    $(window).on('resize', function(){
-      tiles.resize();
-      resize_tile_overlay_preview(global_img_obj);
-    });
   </script>
+  <script src="scripts/soph-frm.js"></script>
   <script src="scripts/soph-frm-tile-overlay.js"></script>
 
 </div>

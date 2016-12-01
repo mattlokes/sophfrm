@@ -1,4 +1,5 @@
 // Soph Frame Tile Gallery
+var global_tileGallery = null;
 
 function tileGallery( configObj, elementId ) {
 
@@ -31,7 +32,7 @@ function tileGallery( configObj, elementId ) {
    
 
      setTimeout(function(){
-       this.resize();
+       global_tileGallery.resize();
      },50); 
   };
   
@@ -53,6 +54,8 @@ function tileGallery( configObj, elementId ) {
     }
   
   };
+
+  global_tileGallery = this;
   return this;
 }
 

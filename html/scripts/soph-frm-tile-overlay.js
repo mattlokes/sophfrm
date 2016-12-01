@@ -1,94 +1,90 @@
-    
-    var global_cfgIdx  = 0;
-    var global_cfgShow = true;
-    var global_img_obj = null;
+// Soph Frame Tile Overlay
+var global_tileOverlay = null;
 
-    function save_cfg_changes () {
+function tileOverlay (configObj, elementId) {
+
+  this.config    = configObj;
+  this.elementId = elementId;
+  this.tileIdx   = null;
+  this.tileImg   = null;
+  this.tileShow  = true;
+  this.init= function() {
+    //Set Hide Overlay Selection click Handler 
+    $('#btn-tile-hide').click(function(){
+      if(global_tileOverlay.tileShow) { //If Img show, hide img on click, show overlay
+        $('#tile-'+global_tileOverlay.tileIdx+'-hide-over').fadeIn(400);  //Show Eye-slash overlay
+      } else { //Img was hidden, now show on click, show overlay
+        $('#tile-'+global_tileOverlay.tileIdx+'-hide-over').fadeOut(400);  //Hide Eye-slash overlay
+      }
+      global_tileOverlay.config[global_tileOverlay.tileIdx]['show'] = !global_tileOverlay.tileShow;
+      global_tileOverlay.saveCfg();
+    });
+   
+    //Set Close Overlay click Handler 
+    $('.tile-overlay').click(function(){
+      global_tileOverlay.close(); 
+    });
+  };
+  
+  this.saveCfg = function() {
       $.ajax({
                type: "POST",
                dataType: "json",
                url: "gallery_cfg_save.php",
-               data: JSON.stringify(global_galleryConfig),
+               data: JSON.stringify(this.config),
                contentType: "application/json"
              });    
+  };
 
-    }
+  this.open = function( imgObj ) { 
+    var img_src  = $( imgObj ).attr('src'); 
+    this.tileImg = imgObj;
+    this.tileIdx  = parseInt( $( imgObj ).attr('id').replace('tile-', '').replace('-img', '') );
+    this.tileShow = this.config[this.tileIdx]['show'];
 
-    function resize_tile_overlay_preview( img_obj ) {
-      var obj_h    = parseFloat( $( img_obj ).css('height') ); 
-      var obj_w    = parseFloat( $( img_obj ).css('width') );
-      
-      // Scale tile-overlay IMG
-      if (window.matchMedia('(min-width: 550px)').matches) { 
-        //obj_h = obj_h *i 1.25;
-        //obj_w = obj_w * 2;
-      }
+    // Configure tile-overlay preview image
+    $('#tile-overlay-img').attr('src', img_src);
+    this.resize( this.tileImg ); //Resize Image and Disabled Layer
 
-      $('#tile-overlay-img').css('width', obj_w+"px");
-      $('#tile-overlay-img').css('height', obj_h+"px");
-      //Hidden Layer
-      $('#tile-overlay-hide-over').css('width', obj_w+"px");
-      $('#tile-overlay-hide-over').css('height', obj_h+"px");
-      $('#tile-overlay-hide-over-icon').css('font-size',   (obj_w * 0.66)+"px");
-      $('#tile-overlay-hide-over-icon').css('padding-top', (  (obj_h - (obj_w * 0.66) ) * 0.5 )+"px");
-    }
-
-    function open_tile_overlay ( e ) {
-      var img_src  = $( e ).attr('src'); 
-      global_img_obj = e;
-      global_cfgIdx  = parseInt( $( e ).attr('id').replace('tile-', '').replace('-img', '') );
-      global_cfgShow = global_galleryConfig[global_cfgIdx]['show'];
-
-      // -------------------------------------------
-      // Configure tile-overlay preview image
-      // -------------------------------------------- 
-      $('#tile-overlay-img').attr('src', img_src);
-      resize_tile_overlay_preview( e ); //Resize Image and Disabled Layer
-
-      // -------------------------------------------
-      // Configure tile-overlay Show button
-      // --------------------------------------------
-      if ( global_cfgShow ) {
-        $('#tile-overlay-hide-over').css('display','none');                                            //Hide Eye-slash overlay
-        $('#btn-tile-hide').html("<i class='fa fa-eye-slash fa-lg tile-overlay-btn-icon'></i>Hide");//Button becomes Hide
-      } else {
-        $('#tile-overlay-hide-over').css('display','block');                                           //Show Eye-slash overlay
-        $('#btn-tile-hide').html("<i class='fa fa-eye fa-lg tile-overlay-btn-icon'></i>Show");      //Button becomes show
-      } 
-      
-      // -------------------------------------------- 
-      // Open overlay
-      // -------------------------------------------- 
-      $('.tile-overlay').fadeIn(400);
-    }
+    // Configure tile-overlay Show button
+    if ( this.tileShow ) {
+      $('#tile-overlay-hide-over').css('display','none');                                            //Hide Eye-slash overlay
+      $('#btn-tile-hide').html("<i class='fa fa-eye-slash fa-lg tile-overlay-btn-icon'></i>Hide");//Button becomes Hide
+    } else {
+      $('#tile-overlay-hide-over').css('display','block');                                           //Show Eye-slash overlay
+      $('#btn-tile-hide').html("<i class='fa fa-eye fa-lg tile-overlay-btn-icon'></i>Show");      //Button becomes show
+    } 
     
-   function close_tile_overlay ( ) {
-      $('.tile-overlay').fadeOut(400);
-    }
+    // Open overlay
+    $('.tile-overlay').fadeIn(400);
+  };
+  
+  this.close = function() {
+    $('.tile-overlay').fadeOut(400);
+  };
+
+  this.resize = function() {
+    //If no tileImg Bail
+    if (this.tileImg == null) { console.log("Resize Overlay and never been opened"); return; }
    
-    // ---------------------------------------
-    // Event Handlers 
-    // ---------------------------------------
+    var obj_h    = parseFloat( $( this.tileImg ).css('height') ); 
+    var obj_w    = parseFloat( $( this.tileImg ).css('width') );
     
-    //Click Handler
-    $('.tile-overlay').click(function(){
-      close_tile_overlay( ); 
-    });
+    // Scale tile-overlay IMG
+    if (window.matchMedia('(min-width: 550px)').matches) { 
+      //obj_h = obj_h *i 1.25;
+      //obj_w = obj_w * 2;
+    }
 
-    $('.tile-img').click(function(){
-      open_tile_overlay( this ); 
-    });
-    
-    $('.tile-hide-over-g').click(function(){
-      open_tile_overlay( $(this).siblings('img') );
-    });
-    
-    $('#btn-tile-hide').click(function(){
-      if(global_cfgShow) { //If Img show, hide img on click, show overlay
-        $('#tile-'+global_cfgIdx+'-hide-over').fadeIn(400);  //Show Eye-slash overlay
-      } else { //Img was hidden, now show on click, show overlay
-        $('#tile-'+global_cfgIdx+'-hide-over').fadeOut(400);  //Hide Eye-slash overlay
-      }
-      global_galleryConfig[global_cfgIdx]['show'] = !global_cfgShow;
-      save_cfg_changes();
-    });
+    $('#tile-overlay-img').css('width', obj_w+"px");
+    $('#tile-overlay-img').css('height', obj_h+"px");
+    //Hidden Layer
+    $('#tile-overlay-hide-over').css('width', obj_w+"px");
+    $('#tile-overlay-hide-over').css('height', obj_h+"px");
+    $('#tile-overlay-hide-over-icon').css('font-size',   (obj_w * 0.66)+"px");
+    $('#tile-overlay-hide-over-icon').css('padding-top', (  (obj_h - (obj_w * 0.66) ) * 0.5 )+"px");
+  }; 
+
+  global_tileOverlay = this;
+  return this;
+}

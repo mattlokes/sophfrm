@@ -108,12 +108,12 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   <!-- Add Overlay -->
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="scripts/soph-frm-tile-gallery.js"></script>
   <script type="text/javascript"> 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
   </script>
-  <script src="scripts/soph-frm.js"></script>
+  <script src="scripts/soph-frm-tile-gallery.js"></script>
   <script src="scripts/soph-frm-tile-overlay.js"></script>
+  <script src="scripts/soph-frm.js"></script>
 
 </div>
 <!-- End Document

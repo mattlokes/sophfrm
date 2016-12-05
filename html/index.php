@@ -45,7 +45,7 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   <link rel="stylesheet" href="css/soph-frm-tile-overlay.css">
   <link rel="stylesheet" href="css/soph-frm-tile-gallery.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">      
-  <link rel="stylesheet" href="http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.min.css">
+  <link rel="stylesheet" href="css/jquery.Jcrop.min.css">
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– 
   <link rel="icon" type="image/png" href="images/favicon.png"> -->
@@ -114,8 +114,8 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
       <input id="file" type="file" style="display: none" />
       <div class='container uplo-canvas-cont'>
         <div class='row'>
-          <div class='tweleve columns uplo-container'>
-            <canvas id="uplo_canvas" class="uplo-canvas"></canvas>
+          <div id='ins-crop-canvas' class='tweleve columns uplo-container'>
+           <!-- <canvas id="uplo_canvas" class="uplo-canvas"></canvas> -->
             <div id='uplo-overlay-hide-over' class="uplo-hide-over">
               <i id='uplo-overlay-hide-over-icon' class="fa fa-upload"></i>
             </div>
@@ -133,7 +133,7 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js"></script>
+  <script src="scripts/jquery.Jcrop.min.js"></script>
   <script type="text/javascript"> 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
   </script>

@@ -37,6 +37,13 @@
     background: red;
 }
 
+@media screen and (max-width: 550px) {
+  .uplo-canvas-cont {
+      width: 100%;
+      padding: 0px;
+  }
+}
+
 .uplo-overlay-content button {
     margin-top: 5px;
     color: #AAA;

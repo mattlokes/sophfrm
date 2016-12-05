@@ -9,7 +9,8 @@ $base64img = urldecode($_POST['img']);
 $base64img = str_replace('data:image/png;base64,', '', $base64img);
 $data = base64_decode($base64img);
 
-$filepath = "./testcrop_img/testcrop.png"; // or image.jpg
+$timestamp = date("YmdHis");
+$filepath = "./testcrop_img/photo_" . $timestamp . ".png"; // or image.jpg
 
 // Save the image in a defined path
 file_put_contents($filepath,$data);

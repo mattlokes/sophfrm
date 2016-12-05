@@ -1,4 +1,4 @@
-var crop_max_width = ($(window).width()-40); //400
+var crop_max_width = $(window).width(); //400
 var crop_max_height = (crop_max_width / (4/3)); //300
 var jcrop_api;
 var canvas = $("#uplo_canvas")[0];
@@ -132,7 +132,7 @@ function resizeAndPost() {
    var sc_dat = sc_canvas.toDataURL();
    $.ajax({
     type: "POST",
-    url: "upload_img.php",
+    url: "img_upload.php",
     data: { text: "test", img: encodeURIComponent(sc_dat) },
     contentType: "application/x-www-form-urlencoded;charset=UTF-8",
     cache: false,

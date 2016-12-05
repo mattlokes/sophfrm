@@ -112,16 +112,14 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
     <!-- Overlay content -->
     <div class="uplo-overlay-content">
       <input id="file" type="file" style="display: none" />
-      <div class='container'>
+      <div class='container uplo-canvas-cont'>
         <div class='row'>
-          <div class='four columns mob-port-hack'>&nbsp</div>
-          <div class='four columns uplo-container'>
+          <div class='tweleve columns uplo-container'>
             <canvas id="uplo_canvas" class="uplo-canvas"></canvas>
             <div id='uplo-overlay-hide-over' class="uplo-hide-over">
               <i id='uplo-overlay-hide-over-icon' class="fa fa-upload"></i>
             </div>
           </div>
-          <div class='four columns'>&nbsp</div>
         </div>
       </div>
       <div>

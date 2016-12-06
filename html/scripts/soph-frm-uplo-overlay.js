@@ -22,11 +22,9 @@ function uploadOverlay ( configObj, elementId ) {
 
     $("#btn-uplo-next").click(function(e) {
       if( g_uo.state == "SM_CROP_SEL") {
-        console.log("Apply Crop Selection");
         g_uo.applyCrop();
         g_uo.stateChange("SM_CROP_PRV");
       } else if ( g_uo.state == "SM_CROP_PRV") {
-        console.log("Submit Crop Selection");
         g_uo.submitCrop(e);
         g_uo.stateChange("SM_FILE_SEL");
       }
@@ -34,23 +32,25 @@ function uploadOverlay ( configObj, elementId ) {
     
     $("#btn-uplo-back").click(function(e) {
       if( g_uo.state == "SM_CROP_SEL") {
-        console.log("Back to File Selection");
         g_uo.close();
         g_uo.stateChange("SM_FILE_SEL");
       } else if ( g_uo.state == "SM_CROP_PRV") {
-        console.log("Back To Crop Selection");
         //image.src = origImg = canvas.toDataURL('image/png');
         g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false);
-        //context.drawImage(image, 0, 0, canvas.width, canvas.height);    //Draw Image Without Crop
-        //jcrop_api.enable();
-        //jcrop_api.setSelect( [ prefsize.x, prefsize.y, (prefsize.x+prefsize.w), (prefsize.y+prefsize.h)] );
         g_uo.stateChange("SM_CROP_SEL");
       } else {
       } 
     });
     
+    $("#btn-uplo-rota").click(function(e) {
+      g_uo.rotateImg(0);
+      g_uo.cropIsPortrait = !g_uo.cropIsPortrait; 
+      g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false);
+    });
+    
     $("#file").change(function() {
       g_uo.loadImg(this);
+      $("#file").val('');
     });
     
     $('#header-uplo-icon').click(function(){
@@ -92,7 +92,6 @@ function uploadOverlay ( configObj, elementId ) {
 
 
   this.startCropTool = function( img, isPort, isCrop ) {
-    console.log("Initialising Crop...");
     if (g_uo.jcropApi != null) {
       g_uo.jcropApi.destroy();
     }
@@ -141,6 +140,24 @@ function uploadOverlay ( configObj, elementId ) {
     //image.src = canvas.toDataURL('image/png');
   };
 
+
+  this.rotateImg = function( angle ) {
+
+    var image = g_uo.imageObj;
+    var offscreenCanvas = document.createElement('canvas');
+    var offscreenCtx = offscreenCanvas.getContext('2d');
+
+    var size = Math.max(image.width, image.height);
+    offscreenCanvas.width = size;
+    offscreenCanvas.height = size;
+
+    offscreenCtx.translate(size/2, size/2);
+    offscreenCtx.rotate(angle + Math.PI/2);
+    offscreenCtx.drawImage(image, -(image.width/2), -(image.height/2));
+
+    g_uo.imageObj = offscreenCanvas;
+  }
+
   this.selectCropEvent = function(coords) {
     g_uo.cropSel = {
       x: Math.round(coords.x),
@@ -165,16 +182,19 @@ function uploadOverlay ( configObj, elementId ) {
     if ( state == "SM_FILE_SEL" ) {
        $("#btn-uplo-next").css('display', 'none');
        $("#btn-uplo-back").css('display', 'none');
+       $("#btn-uplo-rota").css('display', 'none');
     } else if( state == "SM_CROP_SEL") {
        $("#btn-uplo-next").html('Crop');
        $("#btn-uplo-back").html('Back');
        $("#btn-uplo-next").css('display', 'inline');
        $("#btn-uplo-back").css('display', 'inline');
+       $("#btn-uplo-rota").css('display', 'inline');
     } else if ( state == "SM_CROP_PRV") {
        $("#btn-uplo-next").html('Submit');
        $("#btn-uplo-back").html('Back');
        $("#btn-uplo-next").css('display', 'inline');
        $("#btn-uplo-back").css('display', 'inline');
+       $("#btn-uplo-rota").css('display', 'none');
     } else {
     } 
     g_uo.state = state;
@@ -219,7 +239,6 @@ function uploadOverlay ( configObj, elementId ) {
       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
       cache: false,
       success: function(data) {
-        //console.log(data);
         alert("Success");
       },
       error: function(data) {

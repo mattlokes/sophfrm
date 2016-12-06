@@ -34,7 +34,7 @@
 }
 
 .uplo-canvas {
-    background: red;
+    /*background: red;*/
 }
 
 @media screen and (max-width: 550px) {

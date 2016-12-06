@@ -116,13 +116,14 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
         <div class='row'>
           <div id='ins-crop-canvas' class='tweleve columns uplo-container'>
            <!-- <canvas id="uplo_canvas" class="uplo-canvas"></canvas> -->
-            <div id='uplo-overlay-hide-over' class="uplo-hide-over">
+           <!-- <div id='uplo-overlay-hide-over' class="uplo-hide-over">
               <i id='uplo-overlay-hide-over-icon' class="fa fa-upload"></i>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
       <div>
+        <button type="button" id='btn-uplo-rota'>Rotate</button>
         <button type="button" id='btn-uplo-next'></button>
       </div>
       <div>

@@ -13,9 +13,9 @@ function uploadOverlay ( configObj, elementId ) {
   this.canvasCtxt = null;
   this.imageObj   = null;
   this.cropSel    = null;
-  this.cropMaxWidth  = 400;
-  this.cropMaxHeight = 300;
   this.cropIsPortrait = false;
+  this.offscreenCanvas = document.createElement('canvas');
+  this.offscreenCtx    = this.offscreenCanvas.getContext('2d');
 
   this.init = function () {
     this.stateChange("SM_FILE_SEL");
@@ -119,6 +119,7 @@ function uploadOverlay ( configObj, elementId ) {
                                      g_uo.cropSel.h, 
                                      0, 0, 
                                      maxW, (maxW/(4/3)) );
+                                     //img.width, img.height );
       g_uo.stateChange("SM_CROP_PRV");
     } else {
       g_uo.canvasDom.width = img.width;
@@ -143,19 +144,24 @@ function uploadOverlay ( configObj, elementId ) {
 
   this.rotateImg = function( angle ) {
 
-    var image = g_uo.imageObj;
-    var offscreenCanvas = document.createElement('canvas');
-    var offscreenCtx = offscreenCanvas.getContext('2d');
+    var size = Math.max(g_uo.imageObj.width, g_uo.imageObj.height);
 
-    var size = Math.max(image.width, image.height);
-    offscreenCanvas.width = size;
-    offscreenCanvas.height = size;
+    g_uo.offscreenCtx.save();
 
-    offscreenCtx.translate(size/2, size/2);
-    offscreenCtx.rotate(angle + Math.PI/2);
-    offscreenCtx.drawImage(image, -(image.width/2), -(image.height/2));
+    //Work Out Extra Padding added for rotate
+    g_uo.offscreenCanvas.remove();
+    g_uo.offscreenCanvas = document.createElement('canvas');
+    g_uo.offscreenCtx    = g_uo.offscreenCanvas.getContext('2d');
 
-    g_uo.imageObj = offscreenCanvas;
+    g_uo.offscreenCanvas.width = g_uo.imageObj.height;
+    g_uo.offscreenCanvas.height = g_uo.imageObj.width;;
+
+    g_uo.offscreenCtx.rotate(90 * Math.PI/180);
+
+    g_uo.offscreenCtx.drawImage( g_uo.imageObj,0, -g_uo.imageObj.height ); //L->P
+
+    g_uo.imageObj = g_uo.offscreenCanvas;
+    g_uo.offscreenCtx.restore();
   }
 
   this.selectCropEvent = function(coords) {

@@ -14,6 +14,8 @@ function uploadOverlay ( configObj, elementId ) {
   this.imageObj   = null;
   this.cropSel    = null;
   this.cropIsPortrait = false;
+  this.angle      = 0;
+  this.offscreenAngle = 360;
   this.offscreenCanvas = document.createElement('canvas');
   this.offscreenCtx    = this.offscreenCanvas.getContext('2d');
 
@@ -35,17 +37,16 @@ function uploadOverlay ( configObj, elementId ) {
         g_uo.close();
         g_uo.stateChange("SM_FILE_SEL");
       } else if ( g_uo.state == "SM_CROP_PRV") {
-        //image.src = origImg = canvas.toDataURL('image/png');
-        g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false);
+        g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false, g_uo.angle);
         g_uo.stateChange("SM_CROP_SEL");
       } else {
       } 
     });
     
     $("#btn-uplo-rota").click(function(e) {
-      g_uo.rotateImg(0);
+      g_uo.angleInc(90);
       g_uo.cropIsPortrait = !g_uo.cropIsPortrait; 
-      g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false);
+      g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false, g_uo.angle);
     });
     
     $("#file").change(function() {
@@ -56,9 +57,19 @@ function uploadOverlay ( configObj, elementId ) {
     $('#header-uplo-icon').click(function(){
       g_uo.open( );
     });
-
-
+    
   };
+
+  this.angleInc = function ( inc ) {
+    g_uo.angle += inc;
+    if ( g_uo.angle >= 360 ) { g_uo.angle -=360; }
+  };
+  
+  this.angleDec = function ( dec ) {
+    g_uo.angle -= dec;
+    if ( g_uo.angle < 0 ) { g_uo.angle +=360; }
+  };
+
 
   //                Cancel
   //    |-------------|-----------|
@@ -86,13 +97,14 @@ function uploadOverlay ( configObj, elementId ) {
       isPort = true;
       g_uo.cropIsPortrait = true;
     }
-    g_uo.startCropTool( g_uo.imageObj, isPort, false );  
+    g_uo.startCropTool( g_uo.imageObj, isPort, false, 0 );  
     g_uo.imageObj.onload = null;
   };
 
 
-  this.startCropTool = function( img, isPort, isCrop ) {
+  this.startCropTool = function( img, isPort, isCrop, angle ) {
     if (g_uo.jcropApi != null) {
+      $(document).unbind('touchstart.jcrop-ios');
       g_uo.jcropApi.destroy();
     }
     $('#ins-crop-canvas').prepend('<canvas id="uplo_canvas" class="uplo-canvas"></canvas>');
@@ -109,22 +121,26 @@ function uploadOverlay ( configObj, elementId ) {
       //var maxW = $(window).width();
       var maxW = parseFloat($('#ins-crop-canvas').css('width').replace('px',''));
     }
+
+    if( angle != g_uo.offscreenAngle ){
+      g_uo.rotateImg(angle);
+    }
     
     if( isCrop ) {
-      g_uo.canvasDom.width = maxW;
-      g_uo.canvasDom.height = maxW/(4/3);
-      g_uo.canvasCtxt.drawImage(img, g_uo.cropSel.x, 
+      g_uo.canvasDom.width = g_uo.cropSel.w;
+      g_uo.canvasDom.height = g_uo.cropSel.h;
+      g_uo.canvasCtxt.drawImage(g_uo.offscreenCanvas, g_uo.cropSel.x, 
                                      g_uo.cropSel.y, 
                                      g_uo.cropSel.w, 
                                      g_uo.cropSel.h, 
                                      0, 0, 
-                                     maxW, (maxW/(4/3)) );
-                                     //img.width, img.height );
+                                     g_uo.cropSel.w,
+                                     g_uo.cropSel.h );
       g_uo.stateChange("SM_CROP_PRV");
     } else {
-      g_uo.canvasDom.width = img.width;
-      g_uo.canvasDom.height = img.height;
-      g_uo.canvasCtxt.drawImage( img, 0, 0);    //Draw Image Without Crop
+      g_uo.canvasDom.width = g_uo.offscreenCanvas.width;
+      g_uo.canvasDom.height = g_uo.offscreenCanvas.height;
+      g_uo.canvasCtxt.drawImage( g_uo.offscreenCanvas, 0, 0);    //Draw Image Without Crop
       g_uo.stateChange("SM_CROP_SEL");
     }
 
@@ -138,7 +154,9 @@ function uploadOverlay ( configObj, elementId ) {
     }, function() {
       g_uo.jcropApi = this;
     });
-    //image.src = canvas.toDataURL('image/png');
+
+    //g_uo.canvasDom.style.maxWidth = maxW+"px";
+    //g_uo.canvasDom.style.maxHeight = maxH+"px";
   };
 
 
@@ -148,19 +166,30 @@ function uploadOverlay ( configObj, elementId ) {
 
     g_uo.offscreenCtx.save();
 
-    //Work Out Extra Padding added for rotate
-    g_uo.offscreenCanvas.remove();
-    g_uo.offscreenCanvas = document.createElement('canvas');
-    g_uo.offscreenCtx    = g_uo.offscreenCanvas.getContext('2d');
-
-    g_uo.offscreenCanvas.width = g_uo.imageObj.height;
-    g_uo.offscreenCanvas.height = g_uo.imageObj.width;;
-
-    g_uo.offscreenCtx.rotate(90 * Math.PI/180);
-
-    g_uo.offscreenCtx.drawImage( g_uo.imageObj,0, -g_uo.imageObj.height ); //L->P
-
-    g_uo.imageObj = g_uo.offscreenCanvas;
+    if( angle == 0 || angle == 360 ){ 
+      g_uo.offscreenCanvas.width = g_uo.imageObj.width;
+      g_uo.offscreenCanvas.height = g_uo.imageObj.height;
+      g_uo.offscreenCtx.drawImage( g_uo.imageObj,0,0 );
+    } else if (angle == 90 ){
+      g_uo.offscreenCanvas.width = g_uo.imageObj.height;
+      g_uo.offscreenCanvas.height = g_uo.imageObj.width;;
+      g_uo.offscreenCtx.rotate(angle * Math.PI/180);
+      g_uo.offscreenCtx.drawImage( g_uo.imageObj,0, -g_uo.imageObj.height );
+    } else if (angle == 180){
+      g_uo.offscreenCanvas.width = g_uo.imageObj.width;
+      g_uo.offscreenCanvas.height = g_uo.imageObj.height;
+      g_uo.offscreenCtx.rotate(angle * Math.PI/180);
+      g_uo.offscreenCtx.drawImage( g_uo.imageObj,-g_uo.imageObj.width, -g_uo.imageObj.height );
+    } else if (angle == 270){
+      g_uo.offscreenCanvas.width = g_uo.imageObj.height;
+      g_uo.offscreenCanvas.height = g_uo.imageObj.width;;
+      g_uo.offscreenCtx.rotate(angle * Math.PI/180);
+      g_uo.offscreenCtx.drawImage( g_uo.imageObj,-g_uo.imageObj.width, 0 );
+    } else {
+      console.error("Only multipleis of 90Deg Angle Supported [" + angle + "]");
+    }
+    
+    g_uo.angle = angle;
     g_uo.offscreenCtx.restore();
   }
 
@@ -177,7 +206,7 @@ function uploadOverlay ( configObj, elementId ) {
   
     //canvas.width = prefsize.w;
     //canvas.height = prefsize.h;
-    g_uo.startCropTool( g_uo.imageObj, false, true );
+    g_uo.startCropTool( g_uo.imageObj, false, true, g_uo.angle );
     if (g_uo.jcropApi != null) {
       g_uo.jcropApi.disable();
       g_uo.jcropApi.release();

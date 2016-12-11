@@ -46,6 +46,7 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   <link rel="stylesheet" href="css/soph-frm-tile-gallery.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">      
   <link rel="stylesheet" href="css/jquery.Jcrop.min.css">
+
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– 
   <link rel="icon" type="image/png" href="images/favicon.png"> -->
@@ -135,7 +136,8 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="scripts/jquery.Jcrop.min.js"></script>
-  <script type="text/javascript"> 
+  <script type="text/javascript">
+    $.expr.cacheLength = 1; 
     var global_galleryConfig = <?php echo file_get_contents($galleryConfigPath) ?>;
   </script>
   <script src="scripts/soph-frm-tile-gallery.js"></script>

@@ -10,8 +10,8 @@ $base64img = str_replace('data:image/png;base64,', '', $base64img);
 $data = base64_decode($base64img);
 
 $timestamp = date("YmdHis");
-$filepath = "./testcrop_img/photo_" . $timestamp . ".png"; // or image.jpg
-
+$filepath = "gallery/preview/photo_" . $timestamp . ".png"; // or image.jpg
 // Save the image in a defined path
 file_put_contents($filepath,$data);
+echo $filepath
 ?>

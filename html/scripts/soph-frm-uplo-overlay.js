@@ -274,10 +274,12 @@ function uploadOverlay ( configObj, elementId ) {
       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
       cache: false,
       success: function(data) {
-        alert("Success");
+        g_uo.close();
+        g_uo.spinnerClose();
+        console.log(data);
       },
       error: function(data) {
-        alert("Error");
+        alert("Error: Contact your local Matt Representative [POST-UPLOAD]");
       },
       complete: function(data) {}
     });
@@ -285,11 +287,11 @@ function uploadOverlay ( configObj, elementId ) {
   
   this.submitCrop = function(e) {
     e.preventDefault();
+    g_uo.spinnerOpen();
     var dat = g_uo.canvasDom.toDataURL('image/png');
     var sc_img = new Image;
     sc_img.onload = g_uo.resizeAndPost;
     sc_img.src = dat;
-    g_uo.close();
   };
 
   this.open = function() {
@@ -304,6 +306,15 @@ function uploadOverlay ( configObj, elementId ) {
       g_uo.jcropApi.destroy();
     };
   };
+
+  this.spinnerOpen = function() {
+    $('.uplo-overlay-spinner').fadeIn(400);
+  };
+  
+  this.spinnerClose = function() {
+    $('.uplo-overlay-spinner').fadeOut(400);
+  };
+
 
   g_uo = this;
   return this;

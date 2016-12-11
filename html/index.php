@@ -134,6 +134,14 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
 
   </div>
   
+  <!-- Uplo Overlay Spinner -->
+  <div class="uplo-overlay-spinner">
+    <div class= "spinner-cont">
+      <div class="spinner">Loading...</div>
+      <div class="spinner-text"> Magic in process, please wait... </div>
+    </div>
+  </div>
+  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="scripts/jquery.Jcrop.min.js"></script>
   <script type="text/javascript">

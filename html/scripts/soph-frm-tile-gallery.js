@@ -28,7 +28,7 @@ function tileGallery( configObj, elementId ) {
         htmlToIns += "</div>";
       }
     } 
-    $('#' + this.elementId).append(htmlToIns);
+    $('#' + this.elementId).html(htmlToIns);
    
 
      setTimeout(function(){

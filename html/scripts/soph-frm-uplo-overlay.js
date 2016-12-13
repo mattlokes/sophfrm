@@ -27,6 +27,7 @@ function uploadOverlay ( configObj, elementId ) {
         g_uo.applyCrop();
         g_uo.stateChange("SM_CROP_PRV");
       } else if ( g_uo.state == "SM_CROP_PRV") {
+        g_uo.spinnerOpen();
         g_uo.submitCrop(e);
         g_uo.stateChange("SM_FILE_SEL");
       }
@@ -274,9 +275,17 @@ function uploadOverlay ( configObj, elementId ) {
       contentType: "application/x-www-form-urlencoded;charset=UTF-8",
       cache: false,
       success: function(data) {
+        g_uo.addCfg( data );
+        g_uo.saveCfg();
+        global_tileGallery.init();
+
+        $('.tile-img').off();
+        $('.tile-hide-over-g').off();
+
+        $('.tile-img').click(function(){ tileSelect.open( this ); });
+        $('.tile-hide-over-g').click(function(){ tileSelect.open( $(this).siblings('img') ); });
         g_uo.close();
         g_uo.spinnerClose();
-        console.log(data);
       },
       error: function(data) {
         alert("Error: Contact your local Matt Representative [POST-UPLOAD]");
@@ -287,11 +296,27 @@ function uploadOverlay ( configObj, elementId ) {
   
   this.submitCrop = function(e) {
     e.preventDefault();
-    g_uo.spinnerOpen();
     var dat = g_uo.canvasDom.toDataURL('image/png');
     var sc_img = new Image;
     sc_img.onload = g_uo.resizeAndPost;
     sc_img.src = dat;
+  };
+
+  this.addCfg = function(pth) {
+    g_uo.config.unshift( { "photoPath":"gallery/preview/"+pth, 
+                           "procPhotoPath":"gallery/processed/"+pth,
+                           "show": true } 
+                       );
+  };
+
+  this.saveCfg = function() {
+      $.ajax({
+               type: "POST",
+               dataType: "json",
+               url: "gallery_cfg_save.php",
+               data: JSON.stringify(g_uo.config),
+               contentType: "application/json"
+             });    
   };
 
   this.open = function() {

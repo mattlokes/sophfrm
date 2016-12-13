@@ -40,8 +40,14 @@ else
    NEW_CFG_ID=`grep 'ID' $SOPHFRM_DIR/frame.cfg | sed -e 's/<[A-Z0_9_]*>//g' -e 's/<\/[A-Z0-9_]*>//g'`
    if [ "$CUR_CFG_ID" -eq "$NEW_CFG_ID" ]; then
       echo "No Config Change..."
-      rm $SOPHFRM_DIR/frame.cfg
-      exit 0
+      if [ -f "$SOPHFRM_DIR/photo_0.png" ]; then
+        rm $SOPHFRM_DIR/frame.cfg
+        exit 0
+      else
+        echo " But there seems to be no photos... so treat as new config"
+        CUR_CFG_PTAR="EMPTY"
+        CUR_CFG_PTIME="9999999"
+      fi
    fi
    NEW_CFG_PTIME=`grep 'PHOTOTIME' $SOPHFRM_DIR/frame.cfg | sed -e 's/<[A-Z0_9_]*>//g' -e 's/<\/[A-Z0-9_]*>//g'`
    NEW_CFG_PTAR=`grep 'PHOTOTAR' $SOPHFRM_DIR/frame.cfg | sed -e 's/<[A-Z0_9_]*>//g' -e 's/<\/[A-Z0-9_]*>//g'`

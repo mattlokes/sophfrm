@@ -55,6 +55,17 @@ function tileGallery( configObj, elementId ) {
   
   };
 
+  this.update = function () {
+    global_tileGallery.tileNum = global_tileGallery.config.length;
+    global_tileGallery.init();
+
+    $('.tile-img').off();                                                                     
+    $('.tile-hide-over-g').off();
+
+    $('.tile-img').click(function(){ tileSelect.open( this ); });
+    $('.tile-hide-over-g').click(function(){ tileSelect.open( $(this).siblings('img') ); });
+  };
+
   global_tileGallery = this;
   return this;
 }

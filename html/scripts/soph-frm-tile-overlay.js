@@ -9,6 +9,7 @@ function tileOverlay (configObj, elementId) {
   this.tileImg   = null;
   this.tileShow  = true;
   this.init= function() {
+
     //Set Hide Overlay Selection click Handler 
     $('#btn-tile-hide').click(function(){
       if(global_tileOverlay.tileShow) { //If Img show, hide img on click, show overlay
@@ -19,6 +20,41 @@ function tileOverlay (configObj, elementId) {
       global_tileOverlay.config[global_tileOverlay.tileIdx]['show'] = !global_tileOverlay.tileShow;
       global_tileOverlay.saveCfg();
     });
+    
+    //Set Delete Overlay Selection click Handler 
+    $('#btn-tile-delete').click(function(){
+      if( global_tileOverlay.config.length == 1) {
+        alert("Sorry cant let you delete the last photo!");
+      } else {
+        if( confirm("Are you sure?") ) {
+          g_uo.spinnerOpen();
+          $.ajax({
+           type: "POST",
+           url: "img_delete.php",
+           data: { delList : [ global_tileOverlay.config[global_tileOverlay.tileIdx]['photoPath'],
+                               global_tileOverlay.config[global_tileOverlay.tileIdx]['procPhotoPath']  ]},
+           //contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+           cache: false,
+           success: function(data) {
+             console.log(data);
+             global_tileOverlay.config.splice(global_tileOverlay.tileIdx, 1 ); //Delete Item
+             global_tileOverlay.saveCfg();
+
+             //Gallery Update
+             global_tileGallery.update();
+
+             g_uo.spinnerClose();
+           },
+           error: function(data) {
+             alert("Error: Contact your local Matt Representative [POST-DELETE]");
+           },
+           complete: function(data) {}
+          });
+        }
+      }
+    });
+
+   
    
     //Set Close Overlay click Handler 
     $('.tile-overlay').click(function(){

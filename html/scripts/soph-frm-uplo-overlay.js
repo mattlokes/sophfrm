@@ -277,13 +277,10 @@ function uploadOverlay ( configObj, elementId ) {
       success: function(data) {
         g_uo.addCfg( data );
         g_uo.saveCfg();
-        global_tileGallery.init();
 
-        $('.tile-img').off();
-        $('.tile-hide-over-g').off();
+        //Gallery Update
+        global_tileGallery.update();
 
-        $('.tile-img').click(function(){ tileSelect.open( this ); });
-        $('.tile-hide-over-g').click(function(){ tileSelect.open( $(this).siblings('img') ); });
         g_uo.close();
         g_uo.spinnerClose();
       },

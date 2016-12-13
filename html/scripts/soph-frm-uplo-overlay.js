@@ -276,7 +276,7 @@ function uploadOverlay ( configObj, elementId ) {
       cache: false,
       success: function(data) {
         g_uo.addCfg( data );
-        g_uo.saveCfg();
+        global_tileOverlay.saveCfg()
 
         //Gallery Update
         global_tileGallery.update();
@@ -304,16 +304,6 @@ function uploadOverlay ( configObj, elementId ) {
                            "procPhotoPath":"gallery/processed/"+pth,
                            "show": true } 
                        );
-  };
-
-  this.saveCfg = function() {
-      $.ajax({
-               type: "POST",
-               dataType: "json",
-               url: "gallery_cfg_save.php",
-               data: JSON.stringify(g_uo.config),
-               contentType: "application/json"
-             });    
   };
 
   this.open = function() {

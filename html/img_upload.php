@@ -15,7 +15,7 @@ $filepathgs = "gallery/processed/photo_" . $timestamp . ".png"; // or image.jpg
 file_put_contents($filepath,$data);
 
 //convert photo_20161211162531.png -strip -colorspace gray -resize "800x600>" -depth 4 -rotate "90" -type palette test.png
-exec('convert ' . $filepath . ' -strip -colorspace gray -resize "800x600>" -depth 4 -rotate "90" -type palette ' . $filepathgs );
+exec('convert ' . $filepath . ' -strip -colorspace gray -resize "800x600>" -depth 8 -rotate "90" -type palette ' . $filepathgs );
 
 echo "photo_" . $timestamp . ".png"
 ?>

@@ -65,10 +65,32 @@ function tileOverlay (configObj, elementId) {
   this.saveCfg = function() {
       $.ajax({
                type: "POST",
-               dataType: "json",
+               //dataType: "json",
                url: "gallery_cfg_save.php",
                data: JSON.stringify(this.config),
-               contentType: "application/json"
+               contentType: "application/json",
+               cache: false,
+               success: function(data) {
+                 //Saved JSON, now Save CONFIG!
+                 $.ajax({
+                          type: "POST",
+                          url: "frame_cfg_save.php",
+                          data: { test: "TEST" },
+                          contentType: "application/text",
+                          cache: false,
+                          success: function(data) {
+                          },
+                          error: function(data) {
+                            alert("Error: Contact your local Matt Representative [POST-SAVE-FRM]");
+                          }
+
+                         });    
+                 
+               },
+               error: function(data) {
+                 alert("Error: Contact your local Matt Representative [POST-SAVE-GAL]");
+               }
+
              });    
   };
 

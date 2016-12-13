@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 #Basic Auth to Restrict Access to Frame Configuration
 if (!isset($_SERVER['PHP_AUTH_USER'])) :
     header('WWW-Authenticate: Basic realm="My Realm"');

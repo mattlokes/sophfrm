@@ -3,6 +3,15 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
+function rmdir_recursive($dir) {
+    foreach(scandir($dir) as $file) {
+        if ('.' === $file || '..' === $file) continue;
+        if (is_dir("$dir/$file")) rmdir_recursive("$dir/$file");
+        else unlink("$dir/$file");
+    }
+    rmdir($dir);
+}
+
 //////////////////////////////////////////////
 //
 // INITIALIZATION
@@ -52,7 +61,7 @@ try
     for($i=0 ; $i < $count; $i++ ) {
       $ph_name = 'photo_'. $i . '.png';
       $a->addFile('cfg/tmp/' . $ph_name  ,
-                  'photos_' . $id_hex .'/' . $ph_name );
+                  $ph_name );
     }
 
     // COMPRESS archive.tar FILE. COMPRESSED FILE WILL BE archive.tar.gz
@@ -98,10 +107,16 @@ file_put_contents( "cfg/tmp/tmp.cfg" , $frm_cfg );
 //
 //////////////////////////////////////////////
 
+$files = glob('cfg/photos_*'); // get all file names
+foreach($files as $file){ // iterate files
+  if(is_file($file))
+    unlink($file); // delete file
+}
+
 //Move New Config
 rename( "cfg/tmp/tmp.tar.gz", "cfg/photos_" . $id_hex . ".tar.gz" );
 rename( "cfg/tmp/tmp.cfg"   , "cfg/frame.cfg" );
 
 //Remove tmp area
-rmdir('cfg/tmp');
+rmdir_recursive('cfg/tmp');
 ?>

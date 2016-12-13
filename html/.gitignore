@@ -5,3 +5,5 @@
 *.png
 *.gif
 *tmp/
+gallery/*
+cfg/*

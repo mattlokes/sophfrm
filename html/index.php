@@ -1,21 +1,18 @@
 <?php
-
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
+include 'config.php';
 
 $galleryDir         = getcwd() . '/gallery';
 $galleryConfigPath  = $galleryDir . '/gallery.json';
 
-//print($config[0]['photoPath']);
-
 #Basic Auth to Restrict Access to Frame Configuration
 if (!isset($_SERVER['PHP_AUTH_USER'])) :
-    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('WWW-Authenticate: Basic realm="sophframemain"');
     header('HTTP/1.0 401 Unauthorized');
     echo 'You Must Enter a User Name & Password!';
     exit;
-elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') && 
-          ($_SERVER['PHP_AUTH_PW'] == 'cookie')      ) : ?>
+elseif( check_user( $_SERVER['PHP_AUTH_USER'] , $_SERVER['PHP_AUTH_PW'] )) : ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -162,6 +159,6 @@ elseif( ($_SERVER['PHP_AUTH_USER'] == 'sophie') &&
 <?php 
 else:
     echo 'Invalid Password!';
-    header('WWW-Authenticate: Basic realm="My Realm"');
+    header('WWW-Authenticate: Basic realm="sophframemain"');
     header('HTTP/1.0 401 Unauthorized');
 endif; ?>

@@ -38,7 +38,7 @@ else
    CUR_CFG_PTAR=`grep 'PHOTOTAR' $FRAME_CURRENT_CFG | sed -e 's/<[A-Z0_9_]*>//g' -e 's/<\/[A-Z0-9_]*>//g'`
    wget -P /mnt/us/sophfrm/ $FRAME_CFG_URL
    NEW_CFG_ID=`grep 'ID' $SOPHFRM_DIR/frame.cfg | sed -e 's/<[A-Z0_9_]*>//g' -e 's/<\/[A-Z0-9_]*>//g'`
-   if [ "$CUR_CFG_ID" -eq "$NEW_CFG_ID" ]; then
+   if [ "$CUR_CFG_ID" = "$NEW_CFG_ID" ]; then
       echo "No Config Change..."
       if [ -f "$SOPHFRM_DIR/photo_0.png" ]; then
         rm $SOPHFRM_DIR/frame.cfg

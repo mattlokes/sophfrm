@@ -8,6 +8,7 @@ function tileOverlay (configObj, elementId) {
   this.tileIdx   = null;
   this.tileImg   = null;
   this.tileShow  = true;
+  this.pendSaveCnt  = 0;
   this.init= function() {
 
     //Set Hide Overlay Selection click Handler 
@@ -63,35 +64,50 @@ function tileOverlay (configObj, elementId) {
   };
   
   this.saveCfg = function() {
-      $.ajax({
-               type: "POST",
-               //dataType: "json",
-               url: "gallery_cfg_save.php",
-               data: JSON.stringify(this.config),
-               contentType: "application/json",
-               cache: false,
-               success: function(data) {
-                 //Saved JSON, now Save CONFIG!
-                 $.ajax({
-                          type: "POST",
-                          url: "frame_cfg_save.php",
-                          data: { test: "TEST" },
-                          contentType: "application/text",
-                          cache: false,
-                          success: function(data) {
-                          },
-                          error: function(data) {
-                            alert("Error: Contact your local Matt Representative [POST-SAVE-FRM]");
+    global_tileOverlay.pendSaveCnt++; 
+    
+    if( global_tileOverlay.pendSaveCnt > 1 ) {
+      //Already a pending save, paranoid that multiple saves could mess each other up.
+      //If save is currently inflight, wait till save completes before doing one more.
+      return;
+    }
+
+    $.ajax({
+             type: "POST",
+             //dataType: "json",
+             url: "gallery_cfg_save.php",
+             data: JSON.stringify(this.config),
+             contentType: "application/json",
+             cache: false,
+             success: function(data) {
+               //Saved JSON, now Save CONFIG!
+               $.ajax({
+                        type: "POST",
+                        url: "frame_cfg_save.php",
+                        data: { test: "TEST" },
+                        contentType: "application/text",
+                        cache: false,
+                        success: function(data) {
+                          global_tileOverlay.pendSaveCnt--;
+                          if( global_tileOverlay.pendSaveCnt > 0 ) {
+                            global_tileOverlay.pendSaveCnt = 0;
+                            global_tileOverlay.saveCfg();
                           }
+                        },
+                        error: function(data) {
+                          global_tileOverlay.pendSaveCnt = 0;
+                          alert("Error: Contact your local Matt Representative [POST-SAVE-FRM]");
+                        }
 
-                         });    
-                 
-               },
-               error: function(data) {
-                 alert("Error: Contact your local Matt Representative [POST-SAVE-GAL]");
-               }
+                       });    
+               
+             },
+             error: function(data) {
+               alert("Error: Contact your local Matt Representative [POST-SAVE-GAL]");
+               global_tileOverlay.pendSaveCnt = 0;
+             }
 
-             });    
+           });    
   };
 
   this.open = function( imgObj ) { 

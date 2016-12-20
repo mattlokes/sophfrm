@@ -1,6 +1,6 @@
 .header {
     z-index: 1;
-    height:70px;
+    height:55px;
     background:#464059;
     position:fixed;
     width:100%;
@@ -9,7 +9,7 @@
 }
 
 .header-icon-bar {
-    margin-top: 12px;
+    margin-top: 5px;
 }
 
 .header-icon {
@@ -20,6 +20,6 @@
 
 .content {
     z-index: -1;
-    padding-top: 70px; /*Must be Header Height*/
+    padding-top: 55px; /*Must be Header Height*/
     /*height: 2000px;*/ /*TEST FOR SCROLLING */
 }

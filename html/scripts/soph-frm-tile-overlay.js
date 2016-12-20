@@ -139,7 +139,10 @@ function tileOverlay (configObj, elementId) {
 
   this.resize = function() {
     //If no tileImg Bail
-    if (this.tileImg == null) { console.log("Resize Overlay and never been opened"); return; }
+    if (this.tileImg == null) { 
+      //console.log("Resize Overlay and never been opened"); 
+      return; 
+    }
    
     var obj_h    = parseFloat( $( this.tileImg ).css('height') ); 
     var obj_w    = parseFloat( $( this.tileImg ).css('width') );

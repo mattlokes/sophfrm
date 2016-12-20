@@ -59,9 +59,8 @@ elseif( check_user( $_SERVER['PHP_AUTH_USER'] , $_SERVER['PHP_AUTH_PW'] )) : ?>
   <div class="header">
     <div class="container">
         <div class="header-icon-bar">
-          <i class="fa fa-check fa-3x u-pull-right header-icon"></i>
-          <i class="fa fa-clock-o fa-3x u-pull-right header-icon"></i>
-          <i id="header-uplo-icon" class="fa fa-upload fa-3x u-pull-right header-icon"></i>
+          <i class="fa fa-gears fa-3x u-pull-right header-icon"></i>
+          <i id="header-uplo-icon" class="fa fa-plus fa-3x u-pull-right header-icon"></i>
         </div>
     </div>
   </div>

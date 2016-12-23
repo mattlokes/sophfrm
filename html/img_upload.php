@@ -24,7 +24,7 @@ elseif( check_user( $_SERVER['PHP_AUTH_USER'] , $_SERVER['PHP_AUTH_PW'] )) :
    //convert photo_20161211162531.png -strip -colorspace gray -resize "800x600>" -depth 4 -rotate "90" -type palette test.png
    exec('convert ' . $filepath . ' -strip -colorspace gray -resize "800x600>" -depth 8 -rotate "90" -type palette ' . $filepathgs );
 
-   echo "photo_" . $timestamp . ".png"
+   echo "photo_" . $timestamp . ".png";
 else:
     header('WWW-Authenticate: Basic realm="sophframemain"');
     header('HTTP/1.0 401 Unauthorized');

@@ -86,20 +86,25 @@ elseif( check_user( $_SERVER['PHP_AUTH_USER'] , $_SERVER['PHP_AUTH_PW'] )) : ?>
               <i id='tile-overlay-hide-over-icon' class="fa fa-eye-slash"></i>
             </div>
           </div>
-          <div class='four columns'>&nbsp</div>
         </div>
       </div>
-      <div>
-        <button type="button" id='btn-tile-hide'>
-          <i class="fa fa-eye fa-lg tile-overlay-btn-icon"></i>Hide
-        </button>
-      </div>
-      <div>
-        <button type="button" id='btn-tile-delete'>
-          <i class="fa fa-trash fa-lg tile-overlay-btn-icon"></i>Delete
-        </button>
+    </div>
+    
+    <!-- Overlay Footer -->
+    <div class="tile-overlay-footer">
+      <div class="container">
+          <div class="tile-overlay-footer-il">
+            <i id='btn-tile-hide' class="fa fa-eye fa-3x u-pull-left header-icon"></i>
+          </div>
+          <div class="tile-overlay-footer-ic">
+          </div>
+          <div class="tile-overlay-footer-ir">
+            <i id='btn-tile-delete' class="fa fa-trash fa-3x u-pull-right header-icon"></i>
+          </div>
+
       </div>
     </div>
+
 
   </div>
 
@@ -112,19 +117,23 @@ elseif( check_user( $_SERVER['PHP_AUTH_USER'] , $_SERVER['PHP_AUTH_PW'] )) : ?>
       <div class='container uplo-canvas-cont'>
         <div class='row'>
           <div id='ins-crop-canvas' class='tweleve columns uplo-container'>
-           <!-- <canvas id="uplo_canvas" class="uplo-canvas"></canvas> -->
-           <!-- <div id='uplo-overlay-hide-over' class="uplo-hide-over">
-              <i id='uplo-overlay-hide-over-icon' class="fa fa-upload"></i>
-            </div> -->
           </div>
         </div>
       </div>
-      <div>
-        <button type="button" id='btn-uplo-rota'>Rotate</button>
-        <button type="button" id='btn-uplo-next'></button>
-      </div>
-      <div>
-        <button type="button" id='btn-uplo-back'></button>
+    </div>
+
+    <!-- Overlay Footer -->
+    <div class="uplo-overlay-footer">
+      <div class="container">
+          <div class="uplo-overlay-footer-il">
+            <i id='btn-uplo-left' class="fa fa-arrow-left fa-3x u-pull-left header-icon"></i>
+          </div>
+          <div class="uplo-overlay-footer-ic">
+            <i id='btn-uplo-cent' class="fa fa-rotate-right fa-3x header-icon"></i>
+          </div>
+          <div class="uplo-overlay-footer-ir">
+            <i id='btn-uplo-right' class="fa fa-crop fa-3x u-pull-right header-icon"></i>
+          </div>
       </div>
     </div>
 

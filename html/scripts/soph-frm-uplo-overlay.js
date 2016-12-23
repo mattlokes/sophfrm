@@ -22,7 +22,7 @@ function uploadOverlay ( configObj, elementId ) {
   this.init = function () {
     this.stateChange("SM_FILE_SEL");
 
-    $("#btn-uplo-next").click(function(e) {
+    $("#btn-uplo-right").click(function(e) {
       if( g_uo.state == "SM_CROP_SEL") {
         g_uo.applyCrop();
         g_uo.stateChange("SM_CROP_PRV");
@@ -33,8 +33,11 @@ function uploadOverlay ( configObj, elementId ) {
       }
     });
     
-    $("#btn-uplo-back").click(function(e) {
-      if( g_uo.state == "SM_CROP_SEL") {
+    $("#btn-uplo-left").click(function(e) {
+      if( g_uo.state == "SM_FILE_SEL") {
+        g_uo.close();
+        g_uo.stateChange("SM_FILE_SEL");
+      } else if( g_uo.state == "SM_CROP_SEL") {
         g_uo.close();
         g_uo.stateChange("SM_FILE_SEL");
       } else if ( g_uo.state == "SM_CROP_PRV") {
@@ -44,7 +47,7 @@ function uploadOverlay ( configObj, elementId ) {
       } 
     });
     
-    $("#btn-uplo-rota").click(function(e) {
+    $("#btn-uplo-cent").click(function(e) {
       g_uo.angleInc(90);
       g_uo.cropIsPortrait = !g_uo.cropIsPortrait; 
       g_uo.startCropTool(g_uo.imageObj, g_uo.cropIsPortrait, false, g_uo.angle);
@@ -216,21 +219,21 @@ function uploadOverlay ( configObj, elementId ) {
 
   this.stateChange = function( state ) {
     if ( state == "SM_FILE_SEL" ) {
-       $("#btn-uplo-next").css('display', 'none');
-       $("#btn-uplo-back").css('display', 'none');
-       $("#btn-uplo-rota").css('display', 'none');
+       $("#btn-uplo-left").css('display', 'inline'); //ALWAYS SHOW BACK
+       $("#btn-uplo-cent").css('display', 'none');
+       $("#btn-uplo-right").css('display', 'none');
     } else if( state == "SM_CROP_SEL") {
-       $("#btn-uplo-next").html('Crop');
-       $("#btn-uplo-back").html('Back');
-       $("#btn-uplo-next").css('display', 'inline');
-       $("#btn-uplo-back").css('display', 'inline');
-       $("#btn-uplo-rota").css('display', 'inline');
+       $("#btn-uplo-right").removeClass("fa-check");
+       $("#btn-uplo-right").addClass("fa-crop");
+       $("#btn-uplo-right").css('display', 'inline');
+       //$("#btn-uplo-left").css('display', 'inline'); //ALWAYS SHOW BACK
+       $("#btn-uplo-cent").css('display', 'inline');
     } else if ( state == "SM_CROP_PRV") {
-       $("#btn-uplo-next").html('Submit');
-       $("#btn-uplo-back").html('Back');
-       $("#btn-uplo-next").css('display', 'inline');
-       $("#btn-uplo-back").css('display', 'inline');
-       $("#btn-uplo-rota").css('display', 'none');
+       $("#btn-uplo-right").removeClass("fa-crop");
+       $("#btn-uplo-right").addClass("fa-check");
+       $("#btn-uplo-right").css('display', 'inline');
+       //$("#btn-uplo-left").css('display', 'inline'); //ALWAYS SHOW BACK
+       $("#btn-uplo-cent").css('display', 'none');
     } else {
     } 
     g_uo.state = state;

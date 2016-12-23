@@ -18,13 +18,39 @@
     /*transition: 0.4s;*/ /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
 
+.tile-overlay-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 55px;
+    padding-bottom: 10px;
+}
+
+.tile-overlay-footer-il, .tile-overlay-footer-ir{
+   width: 32%;
+   display: inline-block;
+}
+
+.tile-overlay-footer-ic {
+   width: 32%;
+   display: inline-block;
+   text-align: center;
+}
+
+.tile-overlay-footer .header-icon {
+   color: rgb(175, 175, 175);
+   margin: 0;
+}
+
+
 /* Position the content inside the overlay */
 .tile-overlay-content {
     position: relative;
-    top: 10%; /* 25% from the top */
+    top: 25%; /* 25% from the top */
     width: 100%; /* 100% width */
     text-align: center; /* Centered text/links */
-    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+    /*margin-top: 30px;*/ /* 30px top margin to avoid conflict with the close button on smaller screens */
 }
 
 .tile-overlay-img {

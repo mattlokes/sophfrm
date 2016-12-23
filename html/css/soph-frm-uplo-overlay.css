@@ -18,6 +18,31 @@
     /*transition: 0.4s;*/ /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
 }
 
+.uplo-overlay-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 55px;
+    padding-bottom: 10px;
+}
+
+.uplo-overlay-footer-il, .uplo-overlay-footer-ir{
+   width: 32%;
+   display: inline-block;
+}
+
+.uplo-overlay-footer-ic {
+   width: 32%;
+   display: inline-block;
+   text-align: center;
+}
+
+.uplo-overlay-footer .header-icon {
+   color: rgb(175, 175, 175);
+   margin: 0;
+}
+
 /* Position the content inside the overlay */
 .uplo-overlay-content {
     position: relative;

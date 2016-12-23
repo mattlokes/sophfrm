@@ -123,10 +123,14 @@ function tileOverlay (configObj, elementId) {
     // Configure tile-overlay Show button
     if ( this.tileShow ) {
       $('#tile-overlay-hide-over').css('display','none');                                            //Hide Eye-slash overlay
-      $('#btn-tile-hide').html("<i class='fa fa-eye-slash fa-lg tile-overlay-btn-icon'></i>Hide");//Button becomes Hide
+      $('#btn-tile-hide').removeClass("fa-eye");
+      $('#btn-tile-hide').addClass("fa-eye-slash");
+      //$('#btn-tile-hide').html("<i class='fa fa-eye-slash fa-lg tile-overlay-btn-icon'></i>Hide");//Button becomes Hide
     } else {
       $('#tile-overlay-hide-over').css('display','block');                                           //Show Eye-slash overlay
-      $('#btn-tile-hide').html("<i class='fa fa-eye fa-lg tile-overlay-btn-icon'></i>Show");      //Button becomes show
+      $('#btn-tile-hide').removeClass("fa-eye-slash");
+      $('#btn-tile-hide').addClass("fa-eye");
+      //$('#btn-tile-hide').html("<i class='fa fa-eye fa-lg tile-overlay-btn-icon'></i>Show");      //Button becomes show
     } 
     
     // Open overlay
